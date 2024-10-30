@@ -55,6 +55,7 @@ canvas.addEventListener("click", (event) => {
 
 
     console.clear();
+    console.log(rect);
     workshops.push(new Workshop(mouseX - 50, mouseY - 50, selectedWorkshop));
 
     function getCityMatrices() {
@@ -73,6 +74,7 @@ canvas.addEventListener("click", (event) => {
     let workshopMatrices = getWorkshopMatrices();
 
 
+    //helytelen lépés keresés
     let flag = true;
     for (let cityMatrix of cityMatrices) {
         for (let workshopMatrix of workshopMatrices) {
@@ -82,6 +84,15 @@ canvas.addEventListener("click", (event) => {
             }
         }
     }
+    for (let workshop of workshops) {
+        for (let currentWorkshop of workshops) {
+            if ((matricesShareElement(workshop.occupiedMatrix, currentWorkshop.occupiedMatrix) && (workshop != currentWorkshop)) || (mouseX < 50 || mouseY < 50)) {
+                flag = false;
+                break;  
+            }
+        }
+    }
+
     if (flag) drawWorkshop(mouseX, mouseY);
     else {
         alert("Helytelen lépés");
@@ -210,8 +221,6 @@ function drawWorkshop(coordX, coordY) {
         ctx.strokeStyle = "black";
         ctx.closePath();
     }
-    console.log("SIKERESS RAJZOLÁS");
-    
 }
 
 let selectedWorkshop = null;
