@@ -254,24 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 let cursor = document.getElementsByClassName("cursor")[0]; 
 
-// Track mouse position and update on the next animation frame
-let mousePos = { x: 0, y: 0 };
-let isMouseMoving = false;
-
-canvas.addEventListener("mousemove", (e) => {
-    mousePos.x = e.clientX - 50;  // Adjusting for cursor offset
-    mousePos.y = e.clientY - 50;
-    isMouseMoving = true;
-});
-
-function updateCursorPosition() {
-    if (isMouseMoving) {
-        cursor.style.top = `${mousePos.y}px`;
-        cursor.style.left = `${mousePos.x}px`;
-        isMouseMoving = false; // Reset flag until next mouse move
-    }
-    requestAnimationFrame(updateCursorPosition);
-}
-
-// Initialize cursor update loop
-requestAnimationFrame(updateCursorPosition);
+canvas.addEventListener("mousemove", e => {
+    cursor.style.top = `${e.y - 50}px`;
+    cursor.style.left = `${e.x - 50}px`;
+})
