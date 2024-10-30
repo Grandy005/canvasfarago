@@ -86,7 +86,7 @@ canvas.addEventListener("click", (event) => {
     }
     for (let workshop of workshops) {
         for (let currentWorkshop of workshops) {
-            if ((matricesShareElement(workshop.occupiedMatrix, currentWorkshop.occupiedMatrix) && (workshop != currentWorkshop)) || (mouseX < 50 || mouseY < 50)) {
+            if ((matricesShareElement(workshop.occupiedMatrix, currentWorkshop.occupiedMatrix) && (workshop != currentWorkshop)) || ((mouseX < 50 || mouseX > 1230) || (mouseY < 50 || mouseY > 680))) {
                 flag = false;
                 break;  
             }
