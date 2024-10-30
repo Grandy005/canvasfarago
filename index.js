@@ -53,9 +53,6 @@ canvas.addEventListener("click", (event) => {
     const mouseX = Math.round(event.clientX - rect.left);
     const mouseY = Math.round(event.clientY - rect.top);
 
-
-    //console.clear();
-    // console.log(rect);
     workshops.push(new Workshop(mouseX - 50, mouseY - 50, selectedWorkshop));
 
     function getCityMatrices() {
@@ -88,8 +85,6 @@ canvas.addEventListener("click", (event) => {
         for (let currentWorkshop of workshops) {
             if (matricesShareElement(workshop.occupiedMatrix, currentWorkshop.occupiedMatrix) && (workshop != currentWorkshop) || ((mouseX < 55 || mouseX > 1225) || (mouseY < 55 || mouseY > 665))) {
                 flag = false;
-                console.log(matricesShareElement(workshop.occupiedMatrix, currentWorkshop.occupiedMatrix));
-                console.log(mouseX + ' , ' + mouseY);
                 break;  
             }
         }
@@ -240,7 +235,6 @@ function drawWorkshop(coordX, coordY, selectedWorkshop) {
         ctx.strokeStyle = "black";
         ctx.closePath();
     }
-    console.log(workshops);
     
 }
 
