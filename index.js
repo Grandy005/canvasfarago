@@ -74,17 +74,17 @@ canvas.addEventListener("click", (event) => {
     //helytelen lépés keresés
     let flag = true;
     for (let cityMatrix of cityMatrices) {
-        for (let workshopMatrix of workshopMatrices) {
-            if (matricesShareElement(cityMatrix, workshopMatrix)) {
-                flag = false;
-                break;  
-            }
+        if (matricesShareElement(cityMatrix, currentWorkshop.occupiedMatrix)) {
+            flag = false;
+            break;  
         }
     }
     for (let workshop of workshops) {
         for (let currentWorkshop of workshops) {
             if (matricesShareElement(workshop.occupiedMatrix, currentWorkshop.occupiedMatrix) && (workshop != currentWorkshop) || ((mouseX < 55 || mouseX > 1225) || (mouseY < 55 || mouseY > 665))) {
                 flag = false;
+                console.log(matricesShareElement(workshop.occupiedMatrix, currentWorkshop.occupiedMatrix));
+                console.log(mouseX + ' , ' + mouseY);
                 break;  
             }
         }
@@ -94,7 +94,7 @@ canvas.addEventListener("click", (event) => {
         alert("Válassz egy műhelytípust!");
         workshops.pop();
     }
-    else if(flag) drawWorkshop(mouseX, mouseY, selectedWorkshop);
+    else if(flag) drawWorkshop(currentWorkshop);
     else {
         alert("Helytelen lépés");
         workshops.pop();
@@ -203,7 +203,7 @@ function drawCity(city) {
     }
 }
 
-function drawWorkshop(coordX, coordY, selectedWorkshop) {
+function drawWorkshop(workshop) {
     const width = 100;
     const height = 100;
 
@@ -211,10 +211,10 @@ function drawWorkshop(coordX, coordY, selectedWorkshop) {
     image.src = "workshop.webp";
 
     image.onload = () => {
-        ctx.drawImage(image, coordX - width / 2, coordY - height / 2, width, height);
+        ctx.drawImage(image, workshop.coordX - width / 2, workshop.coordY - height / 2, width, height);
         ctx.beginPath();
         ctx.lineWidth = 1;
-        switch (selectedWorkshop) {
+        switch (workshop.type) {
             case "purple":
                 ctx.strokeStyle = "purple";
                 ctx.fillStyle = "rgba(128, 0, 128, 0.3)";
@@ -229,12 +229,13 @@ function drawWorkshop(coordX, coordY, selectedWorkshop) {
                 ctx.fillStyle = "rgba(255, 255, 0, 0.3)";
                 break;
         }
-        ctx.arc(coordX, coordY, 130, 0, Math.PI * 2, false);
+        ctx.arc(workshop.coordX, workshop.coordY, 130, 0, Math.PI * 2, false);
         ctx.stroke();
         ctx.fill();
         ctx.strokeStyle = "black";
         ctx.closePath();
     }
+    console.log(workshops);
     
 }
 
