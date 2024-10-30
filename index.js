@@ -55,7 +55,7 @@ canvas.addEventListener("click", (event) => {
 
 
     console.clear();
-    console.log(rect);
+    // console.log(rect);
     workshops.push(new Workshop(mouseX - 50, mouseY - 50, selectedWorkshop));
 
     function getCityMatrices() {
@@ -86,14 +86,16 @@ canvas.addEventListener("click", (event) => {
     }
     for (let workshop of workshops) {
         for (let currentWorkshop of workshops) {
-            if ((matricesShareElement(workshop.occupiedMatrix, currentWorkshop.occupiedMatrix) && (workshop != currentWorkshop)) || ((mouseX < 50 || mouseX > 1230) || (mouseY < 50 || mouseY > 680))) {
+            if ((matricesShareElement(workshop.occupiedMatrix, currentWorkshop.occupiedMatrix) && (workshop != currentWorkshop)) || ((mouseX < 55 || mouseX > 1225) || (mouseY < 55 || mouseY > 665))) {
                 flag = false;
+                console.log(mouseX + ' , ' + mouseY);
                 break;  
             }
         }
     }
 
-    if (flag) drawWorkshop(mouseX, mouseY);
+    if (selectedWorkshop == null) alert("Válassz egy műhelytípust!")
+    else if(flag) drawWorkshop(mouseX, mouseY, selectedWorkshop);
     else {
         alert("Helytelen lépés");
         workshops.pop();
@@ -202,7 +204,7 @@ function drawCity(city) {
     }
 }
 
-function drawWorkshop(coordX, coordY) {
+function drawWorkshop(coordX, coordY, selectedWorkshop) {
     const width = 100;
     const height = 100;
 
@@ -213,14 +215,29 @@ function drawWorkshop(coordX, coordY) {
         ctx.drawImage(image, coordX - width / 2, coordY - height / 2, width, height);
         ctx.beginPath();
         ctx.lineWidth = 1;
-        ctx.strokeStyle = "yellow";
-        ctx.fillStyle = "rgba(255, 255, 0, 0.3)";
+        switch (selectedWorkshop) {
+            case "purple":
+                ctx.strokeStyle = "purple";
+                ctx.fillStyle = "rgba(128, 0, 128, 0.3)";
+                break;
+            case "green":
+                ctx.strokeStyle = "green";
+                ctx.fillStyle = "rgba(0, 255, 0, 0.3)";
+                break;
+
+            case "yellow": 
+                ctx.strokeStyle = "yellow";
+                ctx.fillStyle = "rgba(255, 255, 0, 0.3)";
+                break;
+        }
         ctx.arc(coordX, coordY, 130, 0, Math.PI * 2, false);
         ctx.stroke();
         ctx.fill();
         ctx.strokeStyle = "black";
         ctx.closePath();
     }
+    console.log(workshops);
+    
 }
 
 let selectedWorkshop = null;
